@@ -1,0 +1,39 @@
+{
+	"luci-app-zeroclaw": {
+		"description": "Grant access to ZeroClaw management",
+		"read": {
+			"ubus": {
+				"uci": [
+					"get"
+				],
+				"service": [
+					"list"
+				],
+				"file": [
+					"exec",
+					"read"
+				]
+			},
+			"uci": [
+				"zeroclaw"
+			]
+		},
+		"write": {
+			"ubus": {
+				"uci": [
+					"add",
+					"commit",
+					"delete",
+					"rename",
+					"set"
+				],
+				"file": [
+					"exec"
+				]
+			},
+			"uci": [
+				"zeroclaw"
+			]
+		}
+	}
+}

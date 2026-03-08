@@ -1,0 +1,15 @@
+{
+	"admin/services/zeroclaw": {
+		"title": "ZeroClaw",
+		"order": 80,
+		"action": {
+			"type": "view",
+			"path": "zeroclaw/settings"
+		},
+		"depends": {
+			"acl": [
+				"luci-app-zeroclaw"
+			]
+		}
+	}
+}
