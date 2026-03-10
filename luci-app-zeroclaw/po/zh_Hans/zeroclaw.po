@@ -1,0 +1,543 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_Hans\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:45
+#: luci-app-zeroclaw/root/usr/share/luci/menu.d/luci-app-zeroclaw.json:3
+msgid "ZeroClaw"
+msgstr "ZeroClaw"
+
+msgid "Overview"
+msgstr "概览"
+
+msgid "Onboarding"
+msgstr "引导配置"
+
+msgid "Settings"
+msgstr "设置"
+
+msgid "Diagnostics"
+msgstr "诊断"
+
+msgid "ZeroClaw Onboarding"
+msgstr "ZeroClaw 引导配置"
+
+msgid "Complete the initial ZeroClaw setup in LuCI: fill in the required provider settings, render the generated config, then enable and start the service."
+msgstr "在 LuCI 中完成 ZeroClaw 初始配置：填写所需的提供方设置、渲染生成配置，然后启用并启动服务。"
+
+msgid "Quick Start"
+msgstr "快速开始"
+
+msgid "Enable service after setup"
+msgstr "配置后启用服务"
+
+msgid "Set the default provider used by ZeroClaw for its generated runtime configuration."
+msgstr "设置 ZeroClaw 生成运行时配置时使用的默认提供方。"
+
+msgid "Set the default model for the selected provider."
+msgstr "设置所选提供方对应的默认模型。"
+
+msgid "Provide the API key required by the configured provider."
+msgstr "填写当前配置提供方所需的 API 密钥。"
+
+msgid "Optional custom upstream API endpoint. Leave empty to use the provider default."
+msgstr "可选的自定义上游 API 地址。留空则使用提供方默认地址。"
+
+msgid "Directory used as ZeroClaw HOME and workspace state path."
+msgstr "作为 ZeroClaw HOME 与工作区状态路径使用的目录。"
+
+msgid "Keep this on 127.0.0.1 unless you explicitly want remote access."
+msgstr "除非你明确需要远程访问，否则请保持为 127.0.0.1。"
+
+msgid "Listening port for the ZeroClaw daemon."
+msgstr "ZeroClaw 守护进程的监听端口。"
+
+msgid "Only enable this if you intentionally want the service to bind beyond localhost."
+msgstr "仅在你明确希望服务监听 localhost 之外地址时启用。"
+
+msgid "Advanced Runtime Settings"
+msgstr "高级运行时设置"
+
+msgid "Controls the RUST_LOG level used by the init script."
+msgstr "控制 init 脚本使用的 RUST_LOG 级别。"
+
+msgid "Service is running"
+msgstr "服务运行中"
+
+msgid "Service is stopped"
+msgstr "服务已停止"
+
+msgid "Checking onboarding readiness..."
+msgstr "正在检查引导配置完成度……"
+
+msgid "Loading current configuration summary..."
+msgstr "正在加载当前配置摘要……"
+
+msgid "Provider default"
+msgstr "提供方默认值"
+
+msgid "Configured"
+msgstr "已配置"
+
+msgid "Missing"
+msgstr "缺失"
+
+msgid "Listen address"
+msgstr "监听地址"
+
+msgid "Provider is not configured yet."
+msgstr "提供方尚未配置。"
+
+msgid "Model is not configured yet."
+msgstr "模型尚未配置。"
+
+msgid "API key is not configured yet."
+msgstr "API 密钥尚未配置。"
+
+msgid "Workspace path is not configured yet."
+msgstr "工作区路径尚未配置。"
+
+msgid "Listen host is not configured yet."
+msgstr "监听地址尚未配置。"
+
+msgid "Listen port is not configured yet."
+msgstr "监听端口尚未配置。"
+
+msgid "Ready for service startup"
+msgstr "已可启动服务"
+
+msgid "The essential onboarding fields are configured. You can render the config and start the service from this page."
+msgstr "关键引导配置项已填写完成。你现在可以直接在本页渲染配置并启动服务。"
+
+msgid "No required fields are missing in the current UCI configuration."
+msgstr "当前 UCI 配置中没有缺失的必填项。"
+
+msgid "No configuration warnings detected"
+msgstr "未发现配置警告"
+
+msgid "Checking configuration consistency..."
+msgstr "正在检查配置一致性……"
+
+msgid "A provider is configured but no default model is set yet."
+msgstr "已配置提供方，但尚未设置默认模型。"
+
+msgid "Provider or model is configured, but the API key is still missing."
+msgstr "已配置提供方或模型，但 API 密钥仍然缺失。"
+
+msgid "Public bind is enabled, but the host is still 127.0.0.1. Check whether this matches your real exposure intent."
+msgstr "已启用公网监听，但 host 仍是 127.0.0.1。请确认这是否符合你的真实暴露意图。"
+
+msgid "The listen host is not localhost. Confirm that your firewall policy and network exposure are intentional."
+msgstr "监听地址不是 localhost。请确认防火墙策略和网络暴露范围都是你有意设置的。"
+
+msgid "The workspace is under /tmp, which is usually volatile and not suitable for persistent runtime state."
+msgstr "工作区位于 /tmp 下，这通常是易失目录，不适合保存持久运行状态。"
+
+msgid "The current log level is verbose. This is useful for troubleshooting, but it is usually not recommended for long-term daily use."
+msgstr "当前日志级别较为详细。它适合排障，但通常不建议长期作为日常配置使用。"
+
+msgid "No obvious configuration inconsistencies were detected from the current UCI values."
+msgstr "从当前 UCI 配置值来看，未发现明显的一致性问题。"
+
+msgid "The current configuration looks internally consistent from the LuCI side."
+msgstr "从 LuCI 侧看，当前配置在内部是一致的。"
+
+msgid "Configuration warnings detected"
+msgstr "发现配置警告"
+
+msgid "The following items may not block startup outright, but they are worth reviewing before you rely on this setup:"
+msgstr "以下项目未必会直接阻止启动，但在你正式依赖这套配置之前，建议先检查："
+
+msgid "Configuration Consistency Check"
+msgstr "配置一致性检查"
+
+msgid "Onboarding is incomplete"
+msgstr "引导配置尚未完成"
+
+msgid "The following items still need attention before ZeroClaw is fully ready:"
+msgstr "在 ZeroClaw 完全可用之前，以下项目仍需补充："
+
+msgid "Current Configuration Summary"
+msgstr "当前配置摘要"
+
+msgid "This summary reflects the current UCI values already stored for ZeroClaw."
+msgstr "此摘要反映当前已经写入 ZeroClaw 的 UCI 配置值。"
+
+msgid "Recommended Setup Advice"
+msgstr "推荐配置建议"
+
+msgid "Use these suggestions as a safe starting point for router deployments. They are based on the current package defaults and OpenWrt-facing integration assumptions."
+msgstr "这些建议可作为路由器部署场景下的安全起点，基于当前软件包默认值和面向 OpenWrt 的集成假设。"
+
+msgid "Keep the listen host on 127.0.0.1 unless you really need access from other machines."
+msgstr "除非你确实需要其他设备访问，否则请将监听地址保持为 127.0.0.1。"
+
+msgid "Prefer a stable provider/model pair first, then change one variable at a time when debugging."
+msgstr "建议先使用稳定的提供方与模型组合，排障时一次只改一个变量。"
+
+msgid "Use /var/lib/zeroclaw unless you have a different persistent storage path prepared."
+msgstr "除非你已经准备好了其他持久化存储路径，否则建议使用 /var/lib/zeroclaw。"
+
+msgid "Keep the log level at info for daily use, and temporarily switch to debug only while troubleshooting."
+msgstr "日常使用建议保持 log level 为 info，只有在排障时再临时切换到 debug。"
+
+msgid "Security Notes"
+msgstr "安全提示"
+
+msgid "These settings affect how widely the service is exposed on your router. Review them carefully before enabling remote access."
+msgstr "这些设置会影响服务在路由器上的暴露范围。在启用远程访问前，请仔细检查。"
+
+msgid "If you enable public bind, ZeroClaw may listen beyond localhost depending on the configured host and runtime behavior."
+msgstr "如果启用了公网监听，ZeroClaw 可能会根据当前 host 配置和运行时行为监听 localhost 之外的地址。"
+
+msgid "Avoid exposing provider credentials through screenshots, shared backups, or exported config files."
+msgstr "避免通过截图、共享备份或导出的配置文件泄露提供方凭据。"
+
+msgid "After changing bind-related settings, render the config again and verify the final generated TOML before restarting the service."
+msgstr "修改 bind 相关设置后，请重新渲染配置，并在重启服务前检查最终生成的 TOML。"
+
+msgid "Common Examples"
+msgstr "常见示例"
+
+msgid "These examples are only convenience references for common onboarding combinations. Adjust them to match your actual provider and model choices."
+msgstr "这些示例只是常见引导配置组合的便捷参考，请根据你实际使用的提供方和模型进行调整。"
+
+msgid "After changing values in this form, click Save & Apply first so the summary and readiness check reflect the latest UCI state."
+msgstr "修改本表单中的值后，请先点击“保存并应用”，这样摘要与完成度检查才能反映最新的 UCI 状态。"
+
+msgid "Unable to read status"
+msgstr "无法读取状态"
+
+msgid "Click Render config to generate the runtime TOML preview."
+msgstr "点击“渲染配置”以生成运行时 TOML 预览。"
+
+msgid "Run a common command to inspect the latest result here."
+msgstr "执行常用命令后，可在此查看最新结果。"
+
+msgid "Onboarding Checklist"
+msgstr "引导清单"
+
+msgid "Recommended flow: save the provider settings above, render the generated runtime config, then enable and start the service. Use the common commands below to verify everything from LuCI."
+msgstr "推荐流程：先保存上方提供方设置，再渲染生成运行时配置，然后启用并启动服务。你可以直接在 LuCI 里用下方常用命令完成验证。"
+
+msgid "Fill in provider, model, API key, and workspace settings."
+msgstr "填写提供方、模型、API 密钥和工作区设置。"
+
+msgid "Save & Apply the form to write UCI values."
+msgstr "点击“保存并应用”将配置写入 UCI。"
+
+msgid "Render the runtime config and review the generated TOML preview."
+msgstr "渲染运行时配置并检查生成的 TOML 预览。"
+
+msgid "Enable boot and start or restart the service."
+msgstr "启用开机启动，并启动或重启服务。"
+
+msgid "Run status or doctor commands if you need troubleshooting details."
+msgstr "如需排障细节，可运行 status 或 doctor 命令。"
+
+msgid "Common Actions"
+msgstr "常用操作"
+
+msgid "These actions only expose commands already supported by the current package: config render, init script control, status, and doctor."
+msgstr "这些操作只暴露当前软件包已支持的命令：配置渲染、init 脚本控制、status 与 doctor。"
+
+msgid "Render config"
+msgstr "渲染配置"
+
+msgid "Rendering config..."
+msgstr "正在渲染配置……"
+
+msgid "No rendered config output."
+msgstr "没有渲染出的配置内容。"
+
+msgid "Config render failed: "
+msgstr "配置渲染失败："
+
+msgid "Running command..."
+msgstr "正在执行命令……"
+
+msgid "Boot enabled."
+msgstr "已启用开机启动。"
+
+msgid "Enable boot failed: "
+msgstr "启用开机启动失败："
+
+msgid "Start service"
+msgstr "启动服务"
+
+msgid "Service start command completed."
+msgstr "服务启动命令已完成。"
+
+msgid "Start failed: "
+msgstr "启动失败："
+
+msgid "Restart service"
+msgstr "重启服务"
+
+msgid "Service restart command completed."
+msgstr "服务重启命令已完成。"
+
+msgid "Restart failed: "
+msgstr "重启失败："
+
+msgid "Run status"
+msgstr "运行状态检查"
+
+msgid "Status command completed."
+msgstr "状态检查命令已完成。"
+
+msgid "Status failed: "
+msgstr "状态检查失败："
+
+msgid "Doctor command completed."
+msgstr "诊断命令已完成。"
+
+msgid "Rendered Config Preview"
+msgstr "渲染配置预览"
+
+msgid "This preview is generated by the package renderer at /usr/libexec/zeroclaw/render-config.sh and reflects the current UCI values after Save & Apply."
+msgstr "此预览由软件包的 /usr/libexec/zeroclaw/render-config.sh 生成，反映“保存并应用”后的当前 UCI 配置。"
+
+msgid "ZeroClaw Overview"
+msgstr "ZeroClaw 概览"
+
+msgid "Monitor the ZeroClaw runtime, run service actions, and review the latest diagnostic output."
+msgstr "查看 ZeroClaw 运行状态，执行服务操作，并检查最新诊断输出。"
+
+msgid "This page is the daily operations dashboard for ZeroClaw. You can quickly confirm service health, run the most common actions, and inspect the latest runtime output."
+msgstr "这是 ZeroClaw 的日常运维面板。你可以快速确认服务健康状态，执行常用操作，并查看最新运行输出。"
+
+msgid "Runtime status"
+msgstr "运行时状态"
+
+msgid "Init status"
+msgstr "初始化脚本状态"
+
+msgid "ZeroClaw Settings"
+msgstr "ZeroClaw 设置"
+
+msgid "Configure the ZeroClaw runtime and provider-related options."
+msgstr "配置 ZeroClaw 运行时及提供方相关选项。"
+
+msgid "This page exposes the full UCI-backed ZeroClaw settings. For first-time setup, you can start in the Onboarding page; for ongoing maintenance, use this page to fine-tune runtime behavior."
+msgstr "此页面展示完整的 UCI 驱动 ZeroClaw 配置。首次配置建议从“引导配置”页开始；后续维护则可在此页细调运行时行为。"
+
+msgid "Run the built-in doctor command and inspect recent service logs when troubleshooting runtime issues."
+msgstr "排查运行时问题时，可执行内置诊断命令并查看最近服务日志。"
+
+msgid "Use this page when ZeroClaw does not start cleanly, behaves unexpectedly, or needs deeper troubleshooting details from doctor output and recent logs."
+msgstr "当 ZeroClaw 启动异常、行为不符合预期，或需要更深入的诊断与最近日志信息时，请使用此页面。"
+
+msgid "Refresh logs"
+msgstr "刷新日志"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:45
+msgid "Configure the ZeroClaw runtime and manage its service state."
+msgstr "配置 ZeroClaw 运行时并管理其服务状态。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:47
+msgid "Basic Settings"
+msgstr "基本设置"
+
+msgid "These options control how the ZeroClaw daemon listens, where it stores runtime state, and whether it should be enabled by default."
+msgstr "这些选项控制 ZeroClaw 守护进程的监听方式、运行时状态存储位置，以及是否默认启用服务。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:50
+msgid "Enable"
+msgstr "启用"
+
+msgid "Enable or disable the service in UCI. The init script only starts ZeroClaw when this option is enabled."
+msgstr "在 UCI 中启用或禁用服务。只有启用此选项后，init 脚本才会启动 ZeroClaw。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:53
+msgid "Listen host"
+msgstr "监听地址"
+
+msgid "Recommended default: 127.0.0.1. Change this only if you intentionally want to expose the service beyond localhost."
+msgstr "推荐默认值：127.0.0.1。只有在你明确希望将服务暴露到 localhost 之外时才修改。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:58
+msgid "Listen port"
+msgstr "监听端口"
+
+msgid "Daemon listen port. Make sure it does not conflict with other local services."
+msgstr "守护进程监听端口。请确认它不会与其他本地服务冲突。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:63
+msgid "Allow public bind"
+msgstr "允许公网监听"
+
+msgid "Keep this disabled unless you have reviewed the exposure risk and really want binding beyond localhost."
+msgstr "除非你已经评估过暴露风险并且确实需要监听 localhost 之外的地址，否则请保持关闭。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:66
+msgid "Workspace"
+msgstr "工作区"
+
+msgid "Recommended default: /var/lib/zeroclaw. This path is used as HOME and as the rendered workspace state directory."
+msgstr "推荐默认值：/var/lib/zeroclaw。该路径会作为 HOME，并作为渲染后的工作区状态目录。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:70
+msgid "Log level"
+msgstr "日志级别"
+
+msgid "Recommended default: info. Use debug or trace temporarily while diagnosing issues."
+msgstr "推荐默认值：info。只有在诊断问题时才临时使用 debug 或 trace。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:76
+msgid "Provider Settings"
+msgstr "提供方设置"
+
+msgid "These options feed the package renderer and become part of the generated ZeroClaw runtime TOML configuration."
+msgstr "这些选项会传给软件包配置渲染器，并成为生成的 ZeroClaw 运行时 TOML 配置的一部分。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:79
+msgid "Provider"
+msgstr "提供方"
+
+msgid "Example values: openrouter, openai, anthropic. Keep provider and model aligned."
+msgstr "示例值：openrouter、openai、anthropic。请保持提供方与模型相匹配。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:83
+msgid "API base URL"
+msgstr "API 基础地址"
+
+msgid "Optional override for the upstream API endpoint. Leave empty when the provider default is sufficient."
+msgstr "可选的上游 API 地址覆盖项。如果提供方默认地址已足够，请保持留空。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:86
+msgid "Model"
+msgstr "模型"
+
+msgid "Set the default model to be written into the generated runtime config."
+msgstr "设置将写入生成运行时配置中的默认模型。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:89
+msgid "API key"
+msgstr "API 密钥"
+
+msgid "Provider credential used by the generated config. Avoid sharing screenshots or backups with this value exposed."
+msgstr "生成配置所使用的提供方凭据。避免在截图或备份中暴露该值。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:97
+msgid "Loading status..."
+msgstr "正在加载状态……"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:102
+msgid "Click Run doctor to collect diagnostics."
+msgstr "点击“运行诊断”以收集诊断信息。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:107
+msgid "Loading logs..."
+msgstr "正在加载日志……"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:115
+msgid "running"
+msgstr "运行中"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:115
+msgid "stopped"
+msgstr "已停止"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:119
+msgid "Service state: "
+msgstr "服务状态："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:121
+msgid "Init status:"
+msgstr "初始化脚本状态："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:122
+msgid "No init status output."
+msgstr "没有初始化脚本状态输出。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:124
+msgid "Runtime status:"
+msgstr "运行时状态："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:125
+msgid "No runtime status output."
+msgstr "没有运行时状态输出。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:128
+msgid "Unable to read status: "
+msgstr "无法读取状态："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:142
+msgid "No ZeroClaw log lines found in logread."
+msgstr "在 logread 中未找到 ZeroClaw 日志。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:144
+msgid "Unable to read logs: "
+msgstr "无法读取日志："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:150
+msgid "Action completed: "
+msgstr "操作已完成："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:153
+msgid "Action failed: "
+msgstr "操作失败："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:158
+msgid "Running doctor..."
+msgstr "正在运行诊断……"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:160
+msgid "No doctor output."
+msgstr "没有诊断输出。"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:162
+msgid "Doctor failed: "
+msgstr "诊断失败："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:168
+msgid "Boot action completed: "
+msgstr "开机动作已完成："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:171
+msgid "Boot action failed: "
+msgstr "开机动作失败："
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:176
+msgid "Service Control"
+msgstr "服务控制"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:181
+msgid "Start"
+msgstr "启动"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:186
+msgid "Stop"
+msgstr "停止"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:191
+msgid "Restart"
+msgstr "重启"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:196
+msgid "Run doctor"
+msgstr "运行诊断"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:201
+msgid "Enable boot"
+msgstr "启用开机启动"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:206
+msgid "Disable boot"
+msgstr "禁用开机启动"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:209
+msgid "Doctor Output"
+msgstr "诊断输出"
+
+#: luci-app-zeroclaw/htdocs/luci-static/resources/view/zeroclaw/settings.js:211
+msgid "Recent Logs"
+msgstr "最近日志"
+
+#: luci-app-zeroclaw/root/usr/share/rpcd/acl.d/luci-app-zeroclaw.json:3
+msgid "Grant access to ZeroClaw management"
+msgstr "授予 ZeroClaw 管理访问权限"
