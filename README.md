@@ -1,8 +1,13 @@
 # openwrt-zeroclaw
 
-This repository is intended to be placed under the OpenWrt `package/` directory.
+[中文说明 / Chinese README](./README.zh-CN.md)
 
-Expected layout inside an OpenWrt tree:
+OpenWrt packaging and LuCI integration for [ZeroClaw](https://github.com/zeroclaw-labs/zeroclaw).
+
+This repository is designed to live inside an OpenWrt build tree under `package/`.
+It is not a standalone application repository with its own root-level build or test workflow.
+
+## Repository layout
 
 ```text
 openwrt/
@@ -10,93 +15,190 @@ openwrt/
     └── openwrt-zeroclaw/
         ├── zeroclaw/
         ├── luci-app-zeroclaw/
-        └── README.md
+        ├── README.md
+        └── README.zh-CN.md
 ```
 
-## Why the package paths look this way
+### Packages in this repo
 
-- `zeroclaw/Makefile` includes `$(TOPDIR)/feeds/packages/lang/rust/rust-package.mk`
-- this matches OpenWrt trees where Rust packaging support is provided by the `packages` feed
-- `luci-app-zeroclaw/Makefile` includes `$(TOPDIR)/feeds/luci/luci.mk`, which assumes the LuCI feed is already installed in the OpenWrt build tree
+- `zeroclaw/`
+  - OpenWrt runtime package
+  - installs the upstream `zeroclaw` binary
+  - provides UCI defaults, a procd init script, and a UCI → TOML renderer
+- `luci-app-zeroclaw/`
+  - LuCI frontend package
+  - provides menu entries, ACL definitions, i18n, and a multi-page ZeroClaw management UI
 
-## Current scope
+## What this repo currently provides
 
-The current repository contains an initial OpenWrt package skeleton:
+This repository already includes:
 
-- `zeroclaw/`: runtime package, UCI defaults, procd init script, TOML renderer
-- `luci-app-zeroclaw/`: LuCI menu, ACL, and a first settings/status page
+- OpenWrt package metadata for the ZeroClaw runtime
+- LuCI package metadata for `luci-app-zeroclaw`
+- a procd-managed init script
+- UCI-backed ZeroClaw configuration
+- rendering from `/etc/config/zeroclaw` to `/etc/zeroclaw/config.toml`
+- a LuCI UI with pages for:
+  - overview
+  - onboarding
+  - settings
+  - diagnostics
 
-This is an integration scaffold, not yet a fully validated OpenWrt release package.
+This is best understood as an OpenWrt integration layer for ZeroClaw.
 
-## Where the LuCI package should appear in menuconfig
+## Current default UCI config surface
 
-If package discovery is working, the LuCI frontend package should appear under:
+The runtime package currently manages this core config set:
 
-- `LuCI -> Applications -> luci-app-zeroclaw`
+- `enabled`
+- `host`
+- `port`
+- `allow_public_bind`
+- `provider`
+- `api_base`
+- `model`
+- `api_key`
+- `workspace`
+- `log_level`
 
-If the symbol is visible but cannot be selected, the most likely cause is that
-its LuCI/runtime dependencies are still disabled in your OpenWrt configuration.
+These values are translated by `zeroclaw/files/usr/libexec/zeroclaw/render-config.sh` into a generated TOML config.
 
-Current package dependencies:
+## Expected OpenWrt dependencies
+
+The LuCI package currently depends on:
 
 - `luci-base`
-- `rpcd-mod-file`
 - `zeroclaw`
 
-Typical fix path in `menuconfig`:
+If your build tree or local changes add more LuCI-side runtime requirements, enable them in `menuconfig` as needed.
 
-1. enable `LuCI -> Collections -> luci`, or at minimum `luci-base`
-2. enable `rpcd-mod-file`
-3. return to `LuCI -> Applications -> luci-app-zeroclaw`
+## Build tree assumptions
 
-If `PACKAGE_luci-app-zeroclaw` is shown but greyed out while:
+This repo assumes:
 
-- `PACKAGE_luci-base = n`
-- `PACKAGE_rpcd-mod-file = n`
+- OpenWrt buildroot is available
+- LuCI feed is installed
+- `packages` feed is installed with Rust packaging support
 
-then package discovery is already working; only dependency enablement is blocking selection.
+Relevant includes used here:
 
-The runtime package should appear under:
+- `zeroclaw/Makefile` includes `$(TOPDIR)/feeds/packages/lang/rust/rust-package.mk`
+- `luci-app-zeroclaw/Makefile` includes `$(TOPDIR)/feeds/luci/luci.mk`
+
+## Package selection in menuconfig
+
+From the OpenWrt tree root:
+
+```sh
+make menuconfig
+```
+
+Enable:
 
 - `Utilities -> zeroclaw`
+- `LuCI -> Applications -> luci-app-zeroclaw`
 
-## Upstream Cargo layout confirmed
+If `luci-app-zeroclaw` is visible but cannot be selected, the most common cause is missing LuCI dependencies in the OpenWrt configuration.
 
-The upstream ZeroClaw repository currently has:
+## Build commands
 
-- root `Cargo.toml` as both workspace root and package manifest
-- package name: `zeroclaw`
-- package version: `0.1.9`
-- binary entrypoint: `src/main.rs`
-- workspace members:
-  - `.`
-  - `crates/robot-kit`
-  - `crates/zeroclaw-types`
-  - `crates/zeroclaw-core`
+Run these commands from the OpenWrt tree root, not from this repository root alone.
 
-This means the OpenWrt package should build the repository root directly rather than pointing at a nested crate.
+### Build the runtime package
 
-## musl / OpenWrt risks already visible from upstream
+```sh
+make package/zeroclaw/compile V=s
+```
 
-Several upstream dependencies are promising for musl, but a few stand out as likely build or size risks:
+### Build the LuCI package
 
-- good sign: `reqwest` is configured with `rustls-tls`, not OpenSSL
-- good sign: upstream already includes musl target settings in `.cargo/config.toml`
-- risk: `rust-version = "1.87"` may be newer than the Rust toolchain in some OpenWrt trees
-- risk: `rusqlite` uses `bundled`, which increases build cost and may need extra toolchain validation
-- risk: `ring` and `rustls` must be verified on each OpenWrt target architecture
-- risk: `wasmtime` is currently a non-optional dependency, which may significantly increase build time and binary size
-- risk: the upstream dependency tree is large enough that low-RAM targets may be impractical even if compilation succeeds
+```sh
+make package/luci-app-zeroclaw/compile V=s
+```
 
-## Practical implication for the next step
+### Rebuild after changing package files
 
-The next technical checkpoint is no longer package path cleanup. It is:
+```sh
+make package/zeroclaw/{clean,compile} V=s
+make package/luci-app-zeroclaw/{clean,compile} V=s
+```
 
-1. validate that the OpenWrt Rust toolchain is new enough for `rust-version = 1.87`
-2. attempt a real package compile against `musl`
-3. identify whether `wasmtime`, `rusqlite`, `ring`, or other crates are the first blockers
-4. decide whether a downstream embedded patch set is required to slim the runtime
+### Full build
 
-## Next implementation focus
+```sh
+make -j$(nproc) V=s
+```
 
-The next required work is to validate actual OpenWrt Rust build behavior for ZeroClaw under `musl`, then refine the package Makefile around the real upstream Cargo layout and dependencies.
+## Validation workflow
+
+There is no repository-local automated test suite yet.
+Practical validation is currently package-level and runtime-level:
+
+1. compile the affected OpenWrt package
+2. install on a target device or emulator
+3. verify runtime and LuCI behavior manually
+
+Useful target-device commands:
+
+```sh
+/etc/init.d/zeroclaw start
+/etc/init.d/zeroclaw stop
+/etc/init.d/zeroclaw restart
+/etc/init.d/zeroclaw enable
+/etc/init.d/zeroclaw disable
+/etc/init.d/zeroclaw status
+
+zeroclaw status
+zeroclaw doctor
+
+uci show zeroclaw
+cat /etc/zeroclaw/config.toml
+logread | grep zeroclaw
+```
+
+## LuCI status
+
+The LuCI frontend is already more than a basic settings page.
+It currently provides a multi-page UI with:
+
+- **Overview** — service state, quick actions, doctor output, recent logs
+- **Onboarding** — first-time setup guidance, readiness checks, configuration warnings, config rendering, common operations
+- **Settings** — full UCI-backed editable settings with guidance text
+- **Diagnostics** — doctor output and recent logs for troubleshooting
+
+The UI uses classic LuCI JavaScript patterns and supports Simplified Chinese translation.
+
+## Upstream build and packaging risks
+
+The upstream ZeroClaw project is a Rust workspace with the root `Cargo.toml` as the main package manifest.
+That means the OpenWrt package builds the upstream repository root directly.
+
+Current visible packaging risks include:
+
+- upstream Rust toolchain requirements may be newer than some OpenWrt trees
+- musl target compatibility still needs real package compile validation
+- dependency size and compile cost may be significant on constrained targets
+- runtime feature surface is broader than the current OpenWrt UCI/TOML wrapper exposes
+
+## Current limitations
+
+- no repository-local test suite
+- no single-test runner
+- no repo-local lint configuration
+- not all upstream ZeroClaw config domains are exposed through UCI yet
+- not all upstream CLI operations are surfaced in LuCI yet
+- meaningful validation still depends on a real OpenWrt build tree and preferably a target device
+
+## Roadmap direction
+
+The current development direction is:
+
+1. keep the OpenWrt package conservative and operator-friendly
+2. expose more safe upstream ZeroClaw configuration domains through UCI
+3. extend LuCI so common configuration and day-2 operations can be done without dropping to the shell
+4. validate actual musl/OpenWrt build behavior against upstream changes
+
+## Related files
+
+- `AGENTS.md` — repository guidance for coding agents
+- `OpenWrt-ZeroClaw-Adaptation-Plan.md` — adaptation context and architecture notes
