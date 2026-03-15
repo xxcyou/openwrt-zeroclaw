@@ -79,7 +79,7 @@ jobs:
             uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
           sudo -E apt-get -qq autoremove --purge
           sudo -E apt-get -qq clean
-          sudo timedatectl set-timezone "$TZ"
+          sudo timedate set-timezone "$TZ"
           sudo mkdir -p /workdir
           sudo chown $USER:$GROUPS /workdir
 
@@ -174,14 +174,28 @@ jobs:
           echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
           echo "status=success" >> $GITHUB_OUTPUT
 
-      - name: Upload Packages to Release
-        uses: softprops/gh-release-assets@v1
+      # ==================== 已修复：替换失效 Action ====================
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         if: steps.tag.outputs.status == 'success' && !cancelled()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
-          files: ${{ env.FIRMWARE }}/*/*zeroclaw*.ipk
+          release_name: Release ${{ steps.tag.outputs.release_tag }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Packages to Release
+        uses: shogo82148/actions-upload-release-asset@v2
+        if: steps.tag.outputs.status == 'success' && !cancelled()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.FIRMWARE }}/*/*zeroclaw*.ipk
+      # =================================================================
 
       - name: Clean Up Workflow Runs
         uses: Mattraks/delete-workflow-runs@v2
