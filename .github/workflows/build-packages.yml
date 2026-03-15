@@ -34,10 +34,16 @@ jobs:
         target:
           - arch: x86_64
             subtarget: 64
+            target_arch: x86
+            target_device: generic
           - arch: aarch64_generic
             subtarget: generic
+            target_arch: armvirt
+            target_device: 64
           - arch: arm_cortex-a9
             subtarget: cortex-a9
+            target_arch: mvebu
+            target_device: cortexa9
 
     name: Build ${{ matrix.target.arch }}
 
@@ -98,19 +104,31 @@ jobs:
           cp README.md immortalwrt/package/openwrt-zeroclaw/ || true
           cp README.zh-CN.md immortalwrt/package/openwrt-zeroclaw/ || true
 
-      - name: Generate Config
+      - name: Generate Dynamic Config
         run: |
           cd immortalwrt
           cat > .config <<EOF
-          CONFIG_TARGET_x86=y
-          CONFIG_TARGET_x86_64=y
-          CONFIG_TARGET_x86_64_DEVICE_generic=y
+          CONFIG_TARGET_${{ matrix.target.target_arch }}=y
+          CONFIG_TARGET_${{ matrix.target.target_arch }}_${{ matrix.target.arch }}=y
+          CONFIG_TARGET_${{ matrix.target.target_arch }}_${{ matrix.target.arch }}_DEVICE_${{ matrix.target.target_device }}=y
           CONFIG_PACKAGE_zeroclaw=m
           CONFIG_PACKAGE_luci-app-zeroclaw=m
           CONFIG_PACKAGE_luci-base=y
           CONFIG_PACKAGE_rpcd-mod-file=y
           EOF
           make defconfig
+
+      # 【关键修复】先编译工具链，解决 Rust 缺少交叉编译器问题
+      - name: Build Toolchain First
+        run: |
+          cd immortalwrt
+          make toolchain/compile -j$(nproc) V=s
+
+      # 清理 rust 避免缓存错误
+      - name: Clean Rust Host
+        run: |
+          cd immortalwrt
+          make package/rust/host/clean V=s
 
       - name: Download Package Sources
         run: |
@@ -133,8 +151,6 @@ jobs:
           cd immortalwrt
           echo "=== Checking for compiled packages ==="
           find bin/packages/ -name "zeroclaw*.ipk" -o -name "luci-app-zeroclaw*.ipk" || echo "No packages found"
-          ls -lh bin/packages/*/base/ || true
-          ls -lh bin/packages/*/luci/ || true
 
       - name: Organize Files
         id: organize
@@ -159,13 +175,13 @@ jobs:
           echo "status=success" >> $GITHUB_OUTPUT
 
       - name: Upload Packages to Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/gh-release-assets@v1
         if: steps.tag.outputs.status == 'success' && !cancelled()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
-          files: ${{ env.FIRMWARE }}/*zeroclaw*.ipk
+          files: ${{ env.FIRMWARE }}/*/*zeroclaw*.ipk
 
       - name: Clean Up Workflow Runs
         uses: Mattraks/delete-workflow-runs@v2
